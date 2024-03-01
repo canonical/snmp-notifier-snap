@@ -1,0 +1,37 @@
+#!/bin/sh
+
+web_listen_address() {
+    value="$(snapctl get web.listen-address)"
+    if [ -z "$value" ]; then
+            value="127.0.0.1:9464"
+            snapctl set web.listen-address="$value"
+    fi
+    echo "$value"
+}
+
+snmp_destination() {
+    value="$(snapctl get snmp.destination)"
+    if [ -z "$value" ]; then
+            value="127.0.0.1:162"
+            snapctl set snmp.destination="$value"
+    fi
+    echo "$value"
+}
+
+snmp_trap_description_template() {
+    value="$(snapctl get snmp.trap-description-template)"
+    if [ -z "$value" ]; then
+            value="${SNAP_DATA}/description-template.tpl"
+            snapctl set snmp.trap-description-template="$value"
+    fi
+    echo "$value"
+}
+
+alert_severities() {
+    value="$(snapctl get alert.severities)"
+    if [ -z "$value" ]; then
+            value="critical,warning,info"
+            snapctl set alert.severities="$value"
+    fi
+    echo "$value"
+}

@@ -1,0 +1,18 @@
+#!/bin/sh -eu
+
+# The default-configure hook is needed because the app is started before the config hook runs, which results in the
+# following errors in the log:
+# 
+# snmp-notifier.snmp-notifier[112252]: snmp_notifier: error: path '' does not exist, try --help
+# systemd[1]: snap.snmp-notifier.snmp-notifier.service: Main process exited, code=exited, status=1/FAILURE
+# systemd[1]: snap.snmp-notifier.snmp-notifier.service: Failed with result 'exit-code'.
+# systemd[1]: snap.snmp-notifier.snmp-notifier.service: Scheduled restart job, restart counter is at 1.
+# 
+# With this hook in place, the wrapper is able to start the app with defaults in place.
+
+. "${SNAP}/bin/common-utilities"
+
+web_listen_address
+snmp_destination
+snmp_trap_description_template
+alert_severities
