@@ -1,0 +1,11 @@
+#!/bin/sh -eu
+
+. "${SNAP}/bin/common-utilities"
+
+web_listen_address
+snmp_destination
+snmp_trap_description_template
+alert_severities
+
+snapctl restart snmp-notifier
+

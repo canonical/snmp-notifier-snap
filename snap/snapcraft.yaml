@@ -1,0 +1,63 @@
+name: snmp-notifier
+version: '1.5.0'
+summary: A webhook to relay Prometheus alerts as SNMP traps.
+license: Apache-2.0
+contact: simon.aronsson@canonical.com
+issues: https://github.com/canonical/snmp-notifier-snap/issues
+source-code: https://github.com/canonical/snmp-notifier-snap
+website: https://github.com/maxwo/snmp_notifier
+description: snmp_notifier receives alerts from the Prometheus' Alertmanager and routes them as SNMP traps.
+base: core22
+grade: stable
+confinement: strict
+
+apps:
+  # Snapcraft does not permit underscores in app names, so we go with a dash instead.
+  # https://bugs.launchpad.net/snapcraft/+bug/1616507
+  snmp-notifier:
+    command: bin/snmp_notifier.wrapper
+    daemon: simple
+    plugs:
+      - home
+      - network
+      - network-bind
+      - network-observe
+
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+
+hooks:
+  configure: {}
+
+parts:
+  snmp-notifier:
+    plugin: go
+    source: https://github.com/maxwo/snmp_notifier
+    source-type: git
+    source-tag: "v1.5.0"
+    build-snaps:
+      # go version should match the project's go.mod
+      - go/1.21/stable
+    override-build: |
+      craftctl default
+      cp -p "${CRAFT_PART_BUILD}/description-template.tpl" "${CRAFT_PART_INSTALL}/"
+    organize:
+      description-template.tpl: etc/snmp_notifier/description-template.tpl
+
+  snap-wrappers:
+    plugin: dump
+    source: ./snap/local
+    organize:
+      snmp_notifier.wrapper: bin/snmp_notifier.wrapper
+      common-utilities: bin/common-utilities
+    prime:
+      - bin/snmp_notifier.wrapper
+      - bin/common-utilities
+
+  hooks:
+    plugin: dump
+    source: ./snap/hooks
+    organize:
+      configure: snap/hooks/configure
+      default-configure: snap/hooks/default-configure

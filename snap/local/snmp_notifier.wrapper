@@ -1,0 +1,9 @@
+#!/bin/sh
+
+test -e "${SNAP_DATA}/description-template.tpl" || cp "${SNAP}/etc/snmp_notifier/description-template.tpl" "${SNAP_DATA}/description-template.tpl"
+
+exec "${SNAP}/bin/snmp_notifier" \
+  --web.listen-address="$(snapctl get web.listen-address)" \
+  --snmp.destination="$(snapctl get snmp.destination)" \
+  --snmp.trap-description-template="$(snapctl get snmp.trap-description-template)" \
+  --alert.severities="$(snapctl get alert.severities)"

@@ -1,0 +1,14 @@
+extends: default
+rules:
+  new-line-at-end-of-file:
+    level: error
+  trailing-spaces:
+    level: error
+  document-start:
+    level: warning
+  line-length:
+    level: warning
+  indentation:
+    level: error
+  empty-lines:
+    level: error
