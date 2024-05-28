@@ -3,7 +3,7 @@
   SNMP Notifier
 </h1>
 
-<p align="center"><a href="https://github.com/sed-i/snmp-notifier-snap/actions/workflows/release-snap.yaml"><img src="https://github.com/sed-i/snmp-notifier-snap/actions/workflows/release-snap.yaml/badge.svg"></a></p>
+<p align="center"><a href="https://github.com/canonical/snmp-notifier-snap/actions/workflows/release-snap.yaml"><img src="https://github.com/canonical/snmp-notifier-snap/actions/workflows/release-snap.yaml/badge.svg"></a></p>
 
 <p align="center"><b>This is the snap for SNMP Notifier</b>, <i>“SNMP Notifier receives alerts from the Prometheus' Alertmanager and routes them as SNMP traps.”</i>. It works on Ubuntu, Fedora, Debian, and other major Linux
 distributions.</p>
